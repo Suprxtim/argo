@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visualization Test</title>
+</head>
+<body>
+    <h1>Testing Base64 HTML Decoding</h1>
+    <div id="visualization-container"></div>
+
+    <script>
+        // Simulate the base64 decoding process that happens in the frontend
+        const testHtml = `<html>
+<head><meta charset="utf-8" /></head>
+<body>
+    <div>
+        <h1>Test Visualization</h1>
+        <p>This is a test HTML content that should be rendered correctly</p>
+    </div>
+</body>
+</html>`;
+
+        // Encode as base64 like the backend does
+        const encodedHtml = btoa(testHtml);
+        const dataUrl = `data:text/html;base64,${encodedHtml}`;
+        
+        // Decode like the frontend does
+        const base64Data = dataUrl.replace('data:text/html;base64,', '');
+        const decodedHtml = atob(base64Data);
+        
+        console.log('Original HTML:', testHtml);
+        console.log('Encoded HTML:', dataUrl);
+        console.log('Decoded HTML:', decodedHtml);
+        console.log('Match:', testHtml === decodedHtml);
+        
+        // Display in the container
+        document.getElementById('visualization-container').innerHTML = decodedHtml;
+    </script>
+</body>
+</html>
