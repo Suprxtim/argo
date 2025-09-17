@@ -87,6 +87,20 @@ To use a custom domain:
 3. **Routing Issues**:
    - The vercel.json file includes routing rules to handle client-side routing
 
+### Using vercel-build Script
+
+Vercel automatically looks for a `vercel-build` script in your package.json and will use it if found. This can help avoid permission issues with the react-scripts binary. Add this to your package.json:
+
+```json
+"scripts": {
+  "start": "npx react-scripts start",
+  "build": "npx react-scripts build",
+  "vercel-build": "npx react-scripts build",
+  "test": "npx react-scripts test",
+  "eject": "npx react-scripts eject"
+}
+```
+
 ### Checking Deployment Logs
 
 1. In the Vercel dashboard, go to your project
