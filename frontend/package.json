@@ -11,8 +11,7 @@
     "react-plotly.js": "^2.6.0",
     "framer-motion": "^10.16.0",
     "lucide-react": "^0.294.0",
-    "@tailwindcss/typography": "^0.5.10",
-    "serve": "^14.2.1"
+    "@tailwindcss/typography": "^0.5.10"
   },
   "devDependencies": {
     "tailwindcss": "^3.3.0",
@@ -25,8 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "serve": "serve -s build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

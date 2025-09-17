@@ -27,9 +27,9 @@ services:
 
   - type: web
     name: floatchat-frontend
-    runtime: static
-    buildCommand: "npm install && npm run build"
-    staticPublishPath: ./frontend/build
+    runtime: node
+    buildCommand: "cd frontend && npm install && npm run build"
+    startCommand: "npx serve -s frontend/build"
     envVars:
       - key: REACT_APP_API_URL
         value: https://argo-backend-dbvb.onrender.com
