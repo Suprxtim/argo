@@ -5,7 +5,7 @@ services:
     buildCommand: |
       cd frontend
       npm install
-      npm run build
+      npx react-scripts build
     startCommand: npx serve -s build
     envVars:
       - key: REACT_APP_API_URL

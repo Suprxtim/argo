@@ -28,7 +28,7 @@ services:
   - type: web
     name: floatchat-frontend
     runtime: node
-    buildCommand: "cd frontend && npm install && npm run build"
+    buildCommand: "cd frontend && npm install && npx react-scripts build"
     startCommand: "npx serve -s frontend/build"
     envVars:
       - key: REACT_APP_API_URL
