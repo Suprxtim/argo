@@ -56,6 +56,7 @@ This guide explains how to deploy the FloatChat frontend to Vercel.
 ### vercel.json
 The `vercel.json` file in the frontend directory contains:
 - Build configuration for Create React App
+- Explicit build command configuration
 - Routing rules for client-side routing
 
 ### Environment Variables
@@ -81,6 +82,7 @@ To use a custom domain:
 2. **Build Failures**:
    - Make sure all dependencies are in package.json
    - Check that the build command is `npm run build`
+   - Ensure package.json scripts don't use `npx` prefix which can cause permission issues
 
 3. **Routing Issues**:
    - The vercel.json file includes routing rules to handle client-side routing
