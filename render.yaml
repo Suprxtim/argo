@@ -32,7 +32,7 @@ services:
     staticPublishPath: ./frontend/build
     envVars:
       - key: REACT_APP_API_URL
-        value: https://floatchat-backend.onrender.com
+        value: https://argo-backend-dbvb.onrender.com
     routes:
       - type: rewrite
         source: /*

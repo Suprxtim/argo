@@ -1,14 +1,15 @@
 services:
-  - type: static
+  - type: web
     name: floatchat-frontend
+    runtime: node
     buildCommand: |
       cd frontend
       npm install
       npm run build
-    staticPublishPath: ./frontend/build
+    startCommand: npm run serve
     envVars:
       - key: REACT_APP_API_URL
-        value: https://your-backend-url.com  # Update this to your actual backend URL
+        value: https://argo-backend-dbvb.onrender.com
     routes:
       - type: rewrite
         source: /*
