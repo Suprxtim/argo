@@ -35,9 +35,26 @@ class Config:
         if not cls.DEEPSEEK_API_KEY:
             raise ValueError("DEEPSEEK_API_KEY is required. Please set it in .env file")
         
-        # Create directories if they don't exist
-        os.makedirs(cls.ARGO_DATA_DIR, exist_ok=True)
-        os.makedirs(cls.PLOTS_DIR, exist_ok=True)
-        os.makedirs(os.path.dirname(cls.LOG_FILE), exist_ok=True)
+        # Create directories if they don't exist, but handle errors gracefully
+        try:
+            os.makedirs(cls.ARGO_DATA_DIR, exist_ok=True)
+        except Exception as e:
+            print(f"Warning: Could not create ARGO_DATA_DIR: {e}")
+        
+        try:
+            os.makedirs(cls.PLOTS_DIR, exist_ok=True)
+        except Exception as e:
+            print(f"Warning: Could not create PLOTS_DIR: {e}")
+        
+        # Don't fail if we can't create the logs directory
+        try:
+            if cls.LOG_FILE:
+                log_dir = os.path.dirname(cls.LOG_FILE)
+                if log_dir:
+                    os.makedirs(log_dir, exist_ok=True)
+        except Exception as e:
+            print(f"Warning: Could not create log directory: {e}")
+            # In production environments, we'll log to stderr instead
+            cls.LOG_FILE = None
         
         return True

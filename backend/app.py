@@ -4,6 +4,7 @@ A full-stack chat application for Argo oceanographic data analysis
 """
 import logging
 import asyncio
+import os
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any
@@ -20,14 +21,30 @@ from data_utils import get_argo_data, get_data_summary
 from llm_utils import generate_llm_response, detect_query_intent
 from viz_utils import create_plot, suggest_plots
 
-# Configure logging
+# Configure logging with error handling for production environments
+log_level = getattr(logging, Config.LOG_LEVEL)
+log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+# Always include console logging
+handlers: list = [logging.StreamHandler()]
+
+# Try to add file logging, but don't fail if it doesn't work
+try:
+    if Config.LOG_FILE:
+        log_dir = os.path.dirname(Config.LOG_FILE)
+        if log_dir:
+            os.makedirs(log_dir, exist_ok=True)
+        file_handler = logging.FileHandler(Config.LOG_FILE)
+        handlers.append(file_handler)
+except Exception as e:
+    # Log to stderr if file logging fails
+    import sys
+    print(f"Warning: Could not set up file logging: {e}", file=sys.stderr)
+
 logging.basicConfig(
-    level=getattr(logging, Config.LOG_LEVEL),
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(Config.LOG_FILE),
-        logging.StreamHandler()
-    ]
+    level=log_level,
+    format=log_format,
+    handlers=handlers
 )
 logger = logging.getLogger(__name__)
 
