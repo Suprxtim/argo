@@ -82,7 +82,8 @@ To use a custom domain:
 2. **Build Failures**:
    - Make sure all dependencies are in package.json
    - Check that the build command is `npm run build`
-   - Ensure package.json scripts don't use `npx` prefix which can cause permission issues
+   - Remove `npx` prefix from package.json scripts which can cause permission issues in deployment environments
+   - Add a `vercel-build` script to package.json for more reliable builds
 
 3. **Routing Issues**:
    - The vercel.json file includes routing rules to handle client-side routing
@@ -93,13 +94,15 @@ Vercel automatically looks for a `vercel-build` script in your package.json and 
 
 ```json
 "scripts": {
-  "start": "npx react-scripts start",
-  "build": "npx react-scripts build",
-  "vercel-build": "npx react-scripts build",
-  "test": "npx react-scripts test",
-  "eject": "npx react-scripts eject"
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "vercel-build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
 }
 ```
+
+This approach removes the `npx` prefix which can cause permission issues in some deployment environments.
 
 ### Checking Deployment Logs
 
