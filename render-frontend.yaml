@@ -1,0 +1,15 @@
+services:
+  - type: static
+    name: floatchat-frontend
+    buildCommand: |
+      cd frontend
+      npm install
+      npm run build
+    staticPublishPath: ./frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://your-backend-url.com  # Update this to your actual backend URL
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
