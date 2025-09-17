@@ -1,5 +1,5 @@
 """
-LLM utilities for OpenRouter API integration with Google Gemma 2 9B
+LLM utilities for OpenRouter API integration with DeepSeek R1
 """
 import logging
 import httpx
@@ -12,7 +12,7 @@ logging.basicConfig(level=getattr(logging, Config.LOG_LEVEL))
 logger = logging.getLogger(__name__)
 
 class OpenRouterLLM:
-    """OpenRouter API client for Google Gemma 2 9B model"""
+    """OpenRouter API client for DeepSeek R1 model"""
     
     def __init__(self):
         self.api_key = Config.DEEPSEEK_API_KEY
@@ -27,12 +27,12 @@ class OpenRouterLLM:
     
     async def generate_response(self, user_query: str, data_context: Optional[str] = None, response_type: str = "explanation") -> str:
         """
-        Generate response using DeepSeek API
+        Generate response using OpenRouter API with DeepSeek Chat v3.1 model
         
         Args:
             user_query: User's question/query
             data_context: Optional context about the data
-            response_type: Type of response needed ("explanation", "data_analysis", "visualization")
+            response_type: Type of response needed ("explanation", "data_analysis", "visualization", "greeting")
         
         Returns:
             Generated response text
@@ -46,7 +46,7 @@ class OpenRouterLLM:
             
             # Prepare the API request with optimized parameters for OpenRouter
             request_data = {
-                "model": "google/gemma-2-9b-it:free",  # Updated to use Google Gemma 2 9B model
+                "model": "deepseek/deepseek-r1:free",  # Updated to use DeepSeek R1 model
                 "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_message}
@@ -55,7 +55,8 @@ class OpenRouterLLM:
                 "temperature": 0.6,
                 "top_p": 0.85,
                 "frequency_penalty": 0.1,
-                "presence_penalty": 0.1
+                "presence_penalty": 0.1,
+                "transform": True  # Enable prompt transformation for better system prompt adherence
             }
             
             # Make API request
@@ -84,8 +85,10 @@ class OpenRouterLLM:
     def _get_system_prompt(self, response_type: str) -> str:
         """Get appropriate system prompt based on response type"""
         
-        base_prompt = """You are FloatChat, an expert oceanographic AI assistant specializing in Argo float data analysis. 
+        base_prompt = """IMPORTANT: You are FLOATCHAT, an expert oceanographic AI assistant specializing in Argo float data analysis. 
         You have access to a comprehensive Argo dataset containing temperature, salinity, depth, and location measurements from autonomous ocean floats worldwide.
+        
+        Your name is FLOATCHAT. You are not Gemma or any other AI model. You are specifically FloatChat.
         
         Key capabilities:
         - Analyze oceanographic data patterns and trends
@@ -94,7 +97,8 @@ class OpenRouterLLM:
         - Provide accurate, scientific explanations
         - Suggest appropriate data visualizations
         
-        Always be helpful, accurate, and educational in your responses."""
+        Always be helpful, accurate, and educational in your responses.
+        Never mention that you are Gemma or any other model. Always identify yourself as FloatChat."""
         
         if response_type == "data_analysis":
             return base_prompt + """
@@ -105,6 +109,8 @@ class OpenRouterLLM:
             - Providing statistical insights
             - Suggesting scientific interpretations
             - Recommending visualizations to illustrate findings
+            
+            CRITICAL: Never mention that you are Gemma or any other model. Always identify yourself as FloatChat.
             """
             
         elif response_type == "visualization":
@@ -115,6 +121,20 @@ class OpenRouterLLM:
             - Suggesting specific plot parameters and configurations
             - Explaining what insights each visualization would reveal
             - Considering best practices for oceanographic data visualization
+            
+            CRITICAL: Never mention that you are Gemma or any other model. Always identify yourself as FloatChat.
+            """
+            
+        elif response_type == "greeting":
+            return base_prompt + """
+            
+            When users greet you with greetings like "hi", "hello", or "hey", respond warmly and introduce yourself as FloatChat.
+            Provide a brief, friendly welcome message that explains what you can help with.
+            Mention that you're an AI assistant for exploring Argo oceanographic data.
+            Keep your response concise but welcoming.
+            ONLY use this greeting response for actual greetings, not for other questions or queries.
+            CRITICAL: Never mention that you are Gemma or any other model. Always identify yourself as FloatChat.
+            Example response: "Hi! I'm FloatChat, your AI assistant for exploring ocean data. I can help you analyze temperature and salinity patterns, create visualizations, and answer questions about oceanography. What would you like to explore?"
             """
             
         else:  # explanation
@@ -125,6 +145,8 @@ class OpenRouterLLM:
             - Using appropriate scientific terminology
             - Making complex concepts accessible
             - Answering questions about oceanography, Argo floats, and marine science
+            
+            CRITICAL: Never mention that you are Gemma or any other model. Always identify yourself as FloatChat.
             """
     
     def _prepare_user_message(self, user_query: str, data_context: Optional[str], response_type: str) -> str:
@@ -139,6 +161,8 @@ class OpenRouterLLM:
             message += "Please analyze this data and provide insights about the oceanographic patterns and trends."
         elif response_type == "visualization":
             message += "Please suggest appropriate visualizations for this data and explain what insights they would reveal."
+        elif response_type == "greeting":
+            message += "This is a greeting message. Please provide a warm, friendly greeting and introduce yourself as FloatChat, the oceanographic AI assistant. Explain what you can help with. ONLY provide a greeting for actual greetings like 'hi', 'hello', 'hey', not for other questions or queries."
         else:
             message += "Please provide a clear and helpful explanation."
         
@@ -149,7 +173,7 @@ class OpenRouterLLM:
         
         if response_type == "data_analysis":
             return """I apologize, but I'm currently unable to connect to the AI analysis service. 
-            However, I can tell you that your Argo data query has been processed successfully. 
+            However, I'm FloatChat, your oceanographic AI assistant, and I can tell you that your Argo data query has been processed successfully. 
             The data contains valuable oceanographic measurements including temperature, salinity, and depth profiles 
             that can reveal important patterns about ocean conditions. 
             
@@ -163,7 +187,7 @@ class OpenRouterLLM:
             
         elif response_type == "visualization":
             return """I apologize, but I'm currently unable to connect to the AI visualization service.
-            However, for oceanographic data like yours, I would typically recommend:
+            However, I'm FloatChat, your oceanographic AI assistant, and for oceanographic data like yours, I would typically recommend:
             
             - Scatter plots for temperature vs salinity relationships
             - Line plots for depth profiles
@@ -174,7 +198,7 @@ class OpenRouterLLM:
             
         else:
             return """I apologize, but I'm currently unable to connect to the AI service to provide a detailed explanation. 
-            However, I'm here to help with your oceanographic questions about Argo float data, including temperature, 
+            However, I'm FloatChat, your oceanographic AI assistant, and I'm here to help with your oceanographic questions about Argo float data, including temperature, 
             salinity, depth measurements, and ocean science concepts. 
             
             Please try your question again in a moment, or feel free to ask about specific aspects of oceanographic data analysis."""
@@ -185,10 +209,20 @@ class OpenRouterLLM:
         
         Returns:
             Tuple of (query_type, parameters)
-            query_type: "data_query", "explanation", "general"
+            query_type: "data_query", "explanation", "greeting", "general"
             parameters: dict with extracted parameters
         """
-        query_lower = query.lower()
+        query_lower = query.lower().strip().rstrip('!')
+        
+        # Handle greetings and simple messages
+        greetings = [
+            'hi', 'hello', 'hey', 'greetings', 'good morning', 'good afternoon', 'good evening',
+            'hi!', 'hello!', 'hey!', 'greetings!', 'good morning!', 'good afternoon!', 'good evening!'
+        ]
+        
+        # Only detect as greeting if it's an exact match
+        if query_lower in greetings:
+            return "greeting", {}
         
         # Data query indicators
         data_keywords = [
@@ -205,8 +239,11 @@ class OpenRouterLLM:
         
         parameters = {}
         
+        # Check for explanation query first (more specific)
+        if any(keyword in query_lower for keyword in explanation_keywords):
+            query_type = "explanation"
         # Check for data query
-        if any(keyword in query_lower for keyword in data_keywords):
+        elif any(keyword in query_lower for keyword in data_keywords):
             query_type = "data_query"
             
             # Extract potential parameters

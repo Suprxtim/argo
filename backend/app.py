@@ -239,6 +239,8 @@ async def process_query(request: QueryRequest):
         try:
             if query_type == "data_query":
                 llm_response_type = "data_analysis"
+            elif query_type == "greeting":
+                llm_response_type = "greeting"
             else:
                 llm_response_type = "explanation"
             

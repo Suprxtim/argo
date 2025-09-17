@@ -13,7 +13,7 @@ class Config:
     # Server Configuration
     HOST = os.getenv("HOST", "localhost")
     PORT = int(os.getenv("PORT", 8000))
-    CORS_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:3001", "http://127.0.0.1:3001", "https://floatchat.onrender.com", "https://floatchat-frontend.onrender.com"]
+    CORS_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:3001", "http://127.0.0.1:3001", "https://floatchat.onrender.com", "https://floatchat-frontend.onrender.com", "https://argo-backend-dbvb.onrender.com", "https://argo-frontend-dbvb.onrender.com", "https://argo-dbvb.onrender.com"]
     
     # Data Configuration - use absolute paths relative to this file
     BASE_DIR = Path(__file__).parent
