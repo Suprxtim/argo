@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: floatchat-backend
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "uvicorn backend.app:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.4
+      - key: DEEPSEEK_API_KEY
+        sync: false
+      - key: DEEPSEEK_API_URL
+        value: https://openrouter.ai/api/v1/chat/completions
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 8000
+      - key: CORS_ORIGINS
+        value: '["https://floatchat.onrender.com"]'
+      - key: LOG_LEVEL
+        value: INFO
+      - key: RENDER
+        value: true
+      - key: ENVIRONMENT
+        value: production
+
+  - type: web
+    name: floatchat-frontend
+    runtime: static
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: ./frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://floatchat-backend.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

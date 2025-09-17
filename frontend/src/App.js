@@ -5,6 +5,9 @@ import ChatBox from './components/ChatBox';
 import InputBox from './components/InputBox';
 import axios from 'axios';
 
+// Use environment variable for API base URL, fallback to relative paths for development
+const API_BASE_URL = process.env.REACT_APP_API_URL || '';
+
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +54,7 @@ What would you like to explore?`,
 
   const checkApiHealth = async () => {
     try {
-      const response = await axios.get('/health');
+      const response = await axios.get(`${API_BASE_URL}/health`);
       setApiStatus(response.data.status);
     } catch (error) {
       console.error('API health check failed:', error);
@@ -75,7 +78,7 @@ What would you like to explore?`,
 
     try {
       // Send to backend
-      const response = await axios.post('/query', {
+      const response = await axios.post(`${API_BASE_URL}/query`, {
         message: message,
         language: 'en',
         include_visualization: true

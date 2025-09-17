@@ -384,13 +384,18 @@ app.mount("/static", StaticFiles(directory=str(static_path)), name="static")
 
 if __name__ == "__main__":
     import uvicorn
+    import os
+    
+    # Check if we're running in production
+    is_production = os.getenv("ENVIRONMENT") == "production" or os.getenv("RENDER") == "true"
     
     logger.info(f"Starting FloatChat API on {Config.HOST}:{Config.PORT}")
+    logger.info(f"Environment: {'Production' if is_production else 'Development'}")
     
     uvicorn.run(
         "app:app",
         host=Config.HOST,
         port=Config.PORT,
-        reload=True,
+        reload=not is_production,  # Disable reload in production
         log_level=Config.LOG_LEVEL.lower()
     )
