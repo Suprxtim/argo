@@ -7,7 +7,6 @@ const PlotDisplay = ({ plotUrl }) => {
   const [hasError, setHasError] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
-  const [iframeSrc, setIframeSrc] = useState(null);
 
   // Reset loading state when plotUrl changes
   useEffect(() => {
@@ -15,23 +14,6 @@ const PlotDisplay = ({ plotUrl }) => {
     setIsLoading(true);
     setHasError(false);
     setRetryCount(0);
-    setIframeSrc(null);
-    
-    // Check if plotUrl is a base64 encoded HTML string
-    if (plotUrl && plotUrl.startsWith('data:text/html;base64,')) {
-      console.log('PlotDisplay: Detected base64 encoded HTML');
-      // For base64 HTML, we'll use it directly as iframe src
-      setIframeSrc(plotUrl);
-      setIsLoading(false);
-    } else if (plotUrl) {
-      console.log('PlotDisplay: Using plotUrl as direct source');
-      // For direct URLs, use as iframe src
-      setIframeSrc(plotUrl);
-      setIsLoading(false);
-    } else {
-      console.log('PlotDisplay: No plotUrl provided');
-      setIsLoading(false);
-    }
   }, [plotUrl]);
 
   const handleIframeLoad = () => {
@@ -191,18 +173,18 @@ const PlotDisplay = ({ plotUrl }) => {
                 </div>
               </div>
             </div>
-          ) : iframeSrc ? (
+          ) : (
             // Render iframe with the plot URL (either base64 data URI or regular URL)
             <iframe
               key={retryCount}
-              src={iframeSrc}
+              src={plotUrl}
               className="w-full h-full border-0"
               title="Data Visualization"
               onLoad={handleIframeLoad}
               onError={handleIframeError}
               sandbox="allow-scripts allow-same-origin allow-top-navigation allow-popups allow-popups-to-escape-sandbox allow-downloads allow-forms"
             />
-          ) : null}
+          )}
         </div>
       </motion.div>
 
@@ -251,16 +233,13 @@ const PlotDisplay = ({ plotUrl }) => {
 
             {/* Fullscreen content */}
             <div className="relative flex-1 h-[calc(100%-60px)]">
-              {iframeSrc ? (
-                // Render iframe for file paths in fullscreen with enhanced sandbox permissions
-                <iframe
-                  key={retryCount}
-                  src={iframeSrc}
-                  className="w-full h-full border-0"
-                  title="Data Visualization - Fullscreen"
-                  sandbox="allow-scripts allow-same-origin allow-top-navigation allow-popups allow-popups-to-escape-sandbox allow-downloads allow-forms"
-                />
-              ) : null}
+              <iframe
+                key={`fullscreen-${retryCount}`}
+                src={plotUrl}
+                className="w-full h-full border-0"
+                title="Data Visualization - Fullscreen"
+                sandbox="allow-scripts allow-same-origin allow-top-navigation allow-popups allow-popups-to-escape-sandbox allow-downloads allow-forms"
+              />
             </div>
           </motion.div>
         </motion.div>

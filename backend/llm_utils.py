@@ -1,5 +1,5 @@
 """
-LLM utilities for DeepSeek R1 API integration
+LLM utilities for OpenRouter API integration with Google Gemma 2 9B
 """
 import logging
 import httpx
@@ -11,8 +11,8 @@ from config import Config
 logging.basicConfig(level=getattr(logging, Config.LOG_LEVEL))
 logger = logging.getLogger(__name__)
 
-class DeepSeekLLM:
-    """DeepSeek R1 Distill Qwen 14B API client"""
+class OpenRouterLLM:
+    """OpenRouter API client for Google Gemma 2 9B model"""
     
     def __init__(self):
         self.api_key = Config.DEEPSEEK_API_KEY
@@ -23,7 +23,7 @@ class DeepSeekLLM:
         }
         
         if not self.api_key:
-            logger.warning("DeepSeek API key not found. Please set DEEPSEEK_API_KEY in .env file")
+            logger.warning("OpenRouter API key not found. Please set DEEPSEEK_API_KEY in .env file")
     
     async def generate_response(self, user_query: str, data_context: Optional[str] = None, response_type: str = "explanation") -> str:
         """
@@ -46,7 +46,7 @@ class DeepSeekLLM:
             
             # Prepare the API request with optimized parameters for OpenRouter
             request_data = {
-                "model": "deepseek/deepseek-r1-distill-qwen-14b",  # Correct OpenRouter model identifier without :free suffix
+                "model": "google/gemma-2-9b-it:free",  # Updated to use Google Gemma 2 9B model
                 "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_message}
@@ -70,13 +70,13 @@ class DeepSeekLLM:
                     result = response.json()
                     return result["choices"][0]["message"]["content"]
                 else:
-                    logger.error(f"DeepSeek API error: {response.status_code} - {response.text}")
+                    logger.error(f"OpenRouter API error: {response.status_code} - {response.text}")
                     logger.error(f"Request data: {request_data}")
                     logger.error(f"Headers: {self.headers}")
                     return self._get_fallback_response(user_query, response_type)
                     
         except Exception as e:
-            logger.error(f"Error calling DeepSeek API: {e}")
+            logger.error(f"Error calling OpenRouter API: {e}")
             logger.error(f"API URL: {self.api_url}")
             logger.error(f"API Key configured: {'Yes' if self.api_key else 'No'}")
             return self._get_fallback_response(user_query, response_type)
@@ -242,12 +242,12 @@ class DeepSeekLLM:
         return query_type, parameters
 
 # Initialize global LLM instance
-deepseek_llm = DeepSeekLLM()
+openrouter_llm = OpenRouterLLM()
 
 async def generate_llm_response(user_query: str, data_context: Optional[str] = None, response_type: str = "explanation") -> str:
     """Convenience function to generate LLM response"""
-    return await deepseek_llm.generate_response(user_query, data_context, response_type)
+    return await openrouter_llm.generate_response(user_query, data_context, response_type)
 
 def detect_query_intent(query: str) -> Tuple[str, Dict]:
     """Convenience function to detect query intent"""
-    return deepseek_llm.detect_query_type(query)
+    return openrouter_llm.detect_query_type(query)
