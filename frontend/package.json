@@ -21,9 +21,10 @@
     "@types/react-dom": "^18.2.0"
   },
   "scripts": {
+    "postinstall": "npm rebuild && chmod +x node_modules/.bin/react-scripts || true",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "vercel-build": "react-scripts build",
+    "vercel-build": "npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

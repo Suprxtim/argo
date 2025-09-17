@@ -55,7 +55,7 @@ This guide explains how to deploy the FloatChat frontend to Vercel.
 
 ### vercel.json
 The `vercel.json` file in the frontend directory contains:
-- Build configuration for Create React App
+- Build configuration for Create React App using @vercel/static-build
 - Explicit build command configuration
 - Routing rules for client-side routing
 
@@ -84,6 +84,8 @@ To use a custom domain:
    - Check that the build command is `npm run build`
    - Remove `npx` prefix from package.json scripts which can cause permission issues in deployment environments
    - Add a `vercel-build` script to package.json for more reliable builds
+   - Try using `npm run build` directly in the `vercel-build` script instead of referencing the binary directly
+   - Use the @vercel/static-build approach in vercel.json for better compatibility
 
 3. **Routing Issues**:
    - The vercel.json file includes routing rules to handle client-side routing
@@ -94,15 +96,64 @@ Vercel automatically looks for a `vercel-build` script in your package.json and 
 
 ```json
 "scripts": {
+  "postinstall": "npm rebuild && chmod +x node_modules/.bin/react-scripts || true",
   "start": "react-scripts start",
   "build": "react-scripts build",
-  "vercel-build": "react-scripts build",
+  "vercel-build": "npm run build",
   "test": "react-scripts test",
   "eject": "react-scripts eject"
 }
 ```
 
-This approach removes the `npx` prefix which can cause permission issues in some deployment environments.
+This approach includes:
+1. A postinstall script that rebuilds npm packages and attempts to fix permissions on the react-scripts binary
+2. Using `npm run build` directly in the vercel-build script instead of referencing the binary directly
+3. Removal of the `npx` prefix which can cause permission issues in deployment environments
+
+### Using vercel.json with @vercel/static-build
+
+We're now using the newer @vercel/static-build approach which is often more reliable:
+
+The `vercel.json` file in your frontend directory:
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
+```
+
+This approach:
+1. Explicitly tells Vercel to use the static build approach
+2. Includes proper routing rules for client-side routing
+3. Often works better than the older configuration formats
 
 ### Checking Deployment Logs
 
