@@ -96,7 +96,6 @@ Vercel automatically looks for a `vercel-build` script in your package.json and 
 
 ```json
 "scripts": {
-  "postinstall": "npm rebuild && chmod +x node_modules/.bin/react-scripts || true",
   "start": "react-scripts start",
   "build": "react-scripts build",
   "vercel-build": "npm run build",
@@ -106,9 +105,30 @@ Vercel automatically looks for a `vercel-build` script in your package.json and 
 ```
 
 This approach includes:
-1. A postinstall script that rebuilds npm packages and attempts to fix permissions on the react-scripts binary
-2. Using `npm run build` directly in the vercel-build script instead of referencing the binary directly
+1. Using `npm run build` directly in the vercel-build script instead of referencing the binary directly
+2. Removal of the postinstall script which can cause issues in Vercel's environment
 3. Removal of the `npx` prefix which can cause permission issues in deployment environments
+
+### Using vercel.json with Auto-Detection
+
+We're now using a simpler vercel.json configuration that relies on Vercel's auto-detection capabilities:
+
+The `vercel.json` file in your frontend directory:
+```json
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+```
+
+This approach:
+1. Allows Vercel to automatically detect the React project
+2. Includes minimal routing rules for client-side routing
+3. Avoids complex build configurations that might cause issues
 
 ### Using vercel.json with @vercel/static-build
 
