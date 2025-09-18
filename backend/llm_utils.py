@@ -60,7 +60,7 @@ class OpenRouterLLM:
             }
             
             # Make API request
-            async with httpx.AsyncClient(timeout=30.0) as client:
+            async with httpx.AsyncClient(timeout=60.0) as client:  # Increased from 30.0 to 60.0
                 response = await client.post(
                     self.api_url,
                     headers=self.headers,
