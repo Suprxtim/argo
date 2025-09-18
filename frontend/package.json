@@ -5,7 +5,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "axios": "^1.6.0",
     "plotly.js": "^2.27.0",
     "react-plotly.js": "^2.6.0",
@@ -21,7 +21,6 @@
     "@types/react-dom": "^18.2.0"
   },
   "scripts": {
-    "postinstall": "chmod +x node_modules/.bin/react-scripts || true",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -46,7 +45,7 @@
     ]
   },
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "proxy": "http://localhost:8000"
 }
