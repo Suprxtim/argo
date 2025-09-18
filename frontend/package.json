@@ -1,7 +1,7 @@
 {
   "name": "floatchat-frontend",
   "version": "1.0.0",
-  "description": "FloatChat - AI-powered chat interface for Argo oceanographic data",
+  "description": "FloatChat - AI-powered chat interface for Argo oceanographic data (Vercel deployment ready)",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
