@@ -38,17 +38,17 @@ const Message = ({ message }) => {
 
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} group`}>
-      <div className={`max-w-xs sm:max-w-md lg:max-w-2xl ${isUser ? 'order-2' : 'order-1'}`}>
+      <div className={`max-w-xs sm:max-w-md lg:max-w-3xl ${isUser ? 'order-2' : 'order-1'}`}>
         {/* Message bubble */}
         <motion.div
           whileHover={{ scale: 1.02 }}
           className={`
-            relative px-4 py-3 rounded-2xl shadow-md backdrop-blur-lg
+            relative px-5 py-4 rounded-2xl shadow-xl backdrop-blur-xl border
             ${isUser 
-              ? 'bg-gradient-to-br from-ocean-500 to-blue-600 text-white rounded-br-sm' 
+              ? 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-br-sm border-cyan-600/30' 
               : isError
-                ? 'bg-gradient-to-br from-red-100/80 to-red-200/80 dark:from-red-900/80 dark:to-red-800/80 text-red-800 dark:text-red-200 border border-red-200/50 dark:border-red-700/50 rounded-bl-sm'
-                : 'bg-gradient-to-br from-gray-100/80 to-gray-200/80 dark:from-gray-700/80 dark:to-gray-800/80 text-gray-900 dark:text-gray-100 rounded-bl-sm'
+                ? 'bg-gradient-to-br from-red-100/90 to-red-200/90 dark:from-red-900/90 dark:to-red-800/90 text-red-800 dark:text-red-200 border-red-300/50 dark:border-red-700/50 rounded-bl-sm'
+                : 'bg-gradient-to-br from-white/90 to-gray-100/90 dark:from-gray-800/90 dark:to-gray-900/90 text-gray-900 dark:text-gray-100 rounded-bl-sm border-cyan-200/40 dark:border-cyan-800/40'
             }
           `}
         >
@@ -63,24 +63,36 @@ const Message = ({ message }) => {
             <motion.div 
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
-              className="mt-3 pt-3 border-t border-gray-300/50 dark:border-gray-600/50"
+              className="mt-4 pt-4 border-t border-cyan-200/30 dark:border-cyan-800/30"
             >
-              <div className="flex items-center space-x-2 mb-2">
-                <BarChart3 className="h-4 w-4" />
-                <span className="text-sm font-medium text-over-background">Data Summary</span>
+              <div className="flex items-center space-x-2 mb-3">
+                <BarChart3 className="h-5 w-5 text-cyan-500" />
+                <span className="text-sm font-semibold text-cyan-600 dark:text-cyan-400">Data Summary</span>
               </div>
-              <div className="text-sm space-y-1 opacity-90">
+              <div className="text-sm space-y-2">
                 {message.dataSummary.records_found && (
-                  <p className="text-over-background">• {message.dataSummary.records_found.toLocaleString()} measurements found</p>
+                  <p className="text-over-background flex items-center">
+                    <span className="w-2 h-2 rounded-full bg-cyan-500 mr-2"></span>
+                    {message.dataSummary.records_found.toLocaleString()} measurements found
+                  </p>
                 )}
                 {message.dataSummary.profiles && (
-                  <p className="text-over-background">• {message.dataSummary.profiles.toLocaleString()} unique profiles</p>
+                  <p className="text-over-background flex items-center">
+                    <span className="w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
+                    {message.dataSummary.profiles.toLocaleString()} unique profiles
+                  </p>
                 )}
                 {message.dataSummary.date_range && (
-                  <p className="text-over-background">• Data from {message.dataSummary.date_range[0]} to {message.dataSummary.date_range[1]}</p>
+                  <p className="text-over-background flex items-center">
+                    <span className="w-2 h-2 rounded-full bg-teal-500 mr-2"></span>
+                    Data from {message.dataSummary.date_range[0]} to {message.dataSummary.date_range[1]}
+                  </p>
                 )}
                 {message.dataSummary.depth_range && (
-                  <p className="text-over-background">• Depth range: {message.dataSummary.depth_range[0]?.toFixed(1)}m - {message.dataSummary.depth_range[1]?.toFixed(1)}m</p>
+                  <p className="text-over-background flex items-center">
+                    <span className="w-2 h-2 rounded-full bg-indigo-500 mr-2"></span>
+                    Depth range: {message.dataSummary.depth_range[0]?.toFixed(1)}m - {message.dataSummary.depth_range[1]?.toFixed(1)}m
+                  </p>
                 )}
               </div>
             </motion.div>
@@ -90,10 +102,10 @@ const Message = ({ message }) => {
           {!isUser && (
             <button
               onClick={() => copyToClipboard(message.content)}
-              className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 rounded bg-white/20 hover:bg-white/30 backdrop-blur-sm shadow-sm"
+              className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-1.5 rounded-lg bg-white/20 hover:bg-white/30 backdrop-blur-sm shadow-sm border border-white/30"
               title="Copy message"
             >
-              {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+              {copied ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4 text-white" />}
             </button>
           )}
         </motion.div>
@@ -104,28 +116,28 @@ const Message = ({ message }) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mt-3"
+            className="mt-4"
           >
             <PlotDisplay plotUrl={message.plotUrl} />
           </motion.div>
         )}
 
         {/* Message metadata */}
-        <div className={`flex items-center space-x-2 mt-1 ${isUser ? 'justify-end' : 'justify-start'}`}>
-          <div className={`flex items-center space-x-1 ${isUser ? 'order-2' : 'order-1'}`}>
+        <div className={`flex items-center space-x-3 mt-2 ${isUser ? 'justify-end' : 'justify-start'}`}>
+          <div className={`flex items-center space-x-1.5 ${isUser ? 'order-2' : 'order-1'}`}>
             {isUser ? (
-              <User className="h-3 w-3 text-gray-500" />
+              <User className="h-4 w-4 text-cyan-500" />
             ) : (
-              <Bot className="h-3 w-3 text-gray-500" />
+              <Bot className="h-4 w-4 text-cyan-500" />
             )}
-            <span className="text-xs text-gray-500 dark:text-gray-400 text-over-background">
+            <span className="text-xs font-medium text-gray-600 dark:text-gray-400 text-over-background">
               {isUser ? 'You' : 'FloatChat'}
             </span>
           </div>
           
-          <div className={`flex items-center space-x-1 ${isUser ? 'order-1' : 'order-2'}`}>
-            <Clock className="h-3 w-3 text-gray-400" />
-            <span className="text-xs text-gray-400 text-over-background">
+          <div className={`flex items-center space-x-1.5 ${isUser ? 'order-1' : 'order-2'}`}>
+            <Clock className="h-3.5 w-3.5 text-gray-400" />
+            <span className="text-xs text-gray-500 text-over-background">
               {formatTimestamp(message.timestamp)}
             </span>
           </div>
@@ -134,10 +146,10 @@ const Message = ({ message }) => {
           {message.queryType && message.queryType !== 'general' && (
             <div className={`${isUser ? 'order-0' : 'order-3'}`}>
               <span className={`
-                text-xs px-2 py-0.5 rounded-full font-medium backdrop-blur-sm shadow-sm
+                text-xs px-2.5 py-1 rounded-full font-semibold backdrop-blur-sm shadow-sm border
                 ${message.queryType === 'data_query' 
-                  ? 'bg-gradient-to-r from-green-100/80 to-green-200/80 text-green-700 dark:from-green-900/80 dark:to-green-800/80 dark:text-green-300'
-                  : 'bg-gradient-to-r from-blue-100/80 to-blue-200/80 text-blue-700 dark:from-blue-900/80 dark:to-blue-800/80 dark:text-blue-300'
+                  ? 'bg-gradient-to-r from-green-100/80 to-emerald-100/80 text-green-700 dark:from-green-900/80 dark:to-emerald-900/80 dark:text-green-300 border-green-300/30 dark:border-green-700/30'
+                  : 'bg-gradient-to-r from-blue-100/80 to-cyan-100/80 text-blue-700 dark:from-blue-900/80 dark:to-cyan-900/80 dark:text-blue-300 border-blue-300/30 dark:border-blue-700/30'
                 }
               `}>
                 {message.queryType === 'data_query' ? 'Data Analysis' : 'Explanation'}

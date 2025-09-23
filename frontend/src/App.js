@@ -140,26 +140,26 @@ What would you like to explore about ocean data?`,
       <AnimatedBackground />
       
       {/* Content Container */}
-      <div className="relative z-10 min-h-screen bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm">
+      <div className="relative z-10 min-h-screen bg-gradient-to-b from-black/10 to-white/20 dark:from-black/20 dark:to-black/10 backdrop-blur-xl">
         {/* Decorative elements */}
-        <div className="absolute top-4 left-4 w-3 h-3 rounded-full bg-cyan-400/40 animate-ping"></div>
-        <div className="absolute top-8 right-8 w-2 h-2 rounded-full bg-blue-400/40 animate-ping delay-1000"></div>
-        <div className="absolute bottom-8 left-8 w-2 h-2 rounded-full bg-teal-400/40 animate-ping delay-2000"></div>
+        <div className="absolute top-6 left-6 w-4 h-4 rounded-full bg-cyan-400/60 animate-ping"></div>
+        <div className="absolute top-12 right-12 w-3 h-3 rounded-full bg-blue-400/60 animate-ping delay-1000"></div>
+        <div className="absolute bottom-12 left-12 w-3 h-3 rounded-full bg-teal-400/60 animate-ping delay-2000"></div>
         
         {/* Header */}
-        <header className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-700/50 sticky top-0 z-50 shadow-sm">
-          <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <header className="bg-gradient-to-r from-white/80 to-cyan-50/80 dark:from-gray-900/80 dark:to-slate-900/80 backdrop-blur-2xl border-b border-cyan-200/30 dark:border-cyan-800/30 sticky top-0 z-50 shadow-2xl shadow-cyan-500/10 dark:shadow-cyan-900/20">
+          <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
             <motion.div 
-              className="flex items-center space-x-3"
+              className="flex items-center space-x-4"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="bg-gradient-to-br from-cyan-500 to-blue-600 p-2 rounded-xl shadow-lg">
-                <Waves className="h-6 w-6 text-white" />
+              <div className="bg-gradient-to-br from-cyan-500 to-blue-600 p-3 rounded-2xl shadow-2xl shadow-cyan-500/30">
+                <Waves className="h-7 w-7 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900 dark:text-white text-over-background">
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-blue-700 bg-clip-text text-transparent text-over-background">
                   FloatChat
                 </h1>
                 <p className="text-sm text-gray-600 dark:text-gray-300 text-over-background">
@@ -168,14 +168,14 @@ What would you like to explore about ocean data?`,
               </div>
             </motion.div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-5">
               {/* API Status */}
-              <div className="flex items-center space-x-2">
-                <div className={`w-2 h-2 rounded-full ${
+              <div className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-white/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-900/80 backdrop-blur-lg border border-cyan-200/30 dark:border-cyan-800/30">
+                <div className={`w-3 h-3 rounded-full ${
                   apiStatus === 'healthy' ? 'bg-green-400 animate-pulse' : 
                   apiStatus === 'degraded' ? 'bg-yellow-400' : 'bg-red-400'
                 }`} />
-                <span className="text-sm text-gray-600 dark:text-gray-300 text-over-background">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 text-over-background">
                   {apiStatus === 'healthy' ? 'Online' : 
                    apiStatus === 'degraded' ? 'Limited' : 'Offline'}
                 </span>
@@ -184,7 +184,7 @@ What would you like to explore about ocean data?`,
               {/* Clear Chat Button */}
               <button
                 onClick={clearChat}
-                className="px-3 py-1 text-sm bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+                className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
                 Clear Chat
               </button>
@@ -192,7 +192,7 @@ What would you like to explore about ocean data?`,
               {/* Dark Mode Toggle */}
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition-colors duration-200 shadow-md"
+                className="p-2.5 rounded-xl bg-gradient-to-r from-gray-200/80 to-gray-300/80 hover:from-gray-300/80 hover:to-gray-400/80 dark:from-gray-700/80 dark:to-gray-800/80 dark:hover:from-gray-600/80 dark:hover:to-gray-700/80 text-gray-700 dark:text-gray-300 transition-all duration-300 shadow-lg hover:shadow-xl"
                 aria-label="Toggle dark mode"
               >
                 {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -202,9 +202,9 @@ What would you like to explore about ocean data?`,
         </header>
 
         {/* Main Content */}
-        <main className="max-w-6xl mx-auto px-4 py-6 h-[calc(100vh-80px)] flex flex-col">
+        <main className="max-w-7xl mx-auto px-6 py-8 h-[calc(100vh-90px)] flex flex-col">
           {/* Chat Area */}
-          <div className="flex-1 flex flex-col space-y-4 overflow-hidden">
+          <div className="flex-1 flex flex-col space-y-6 overflow-hidden">
             <ChatBox 
               messages={messages} 
               isLoading={isLoading}
@@ -218,7 +218,7 @@ What would you like to explore about ocean data?`,
         </main>
 
         {/* Footer */}
-        <footer className="text-center py-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200/30 dark:border-gray-700/30">
+        <footer className="text-center py-5 text-sm text-gray-600 dark:text-gray-400 border-t border-cyan-200/20 dark:border-cyan-800/20 backdrop-blur-lg bg-white/30 dark:bg-gray-900/30">
           <p className="text-over-background">
             Powered by Argo oceanographic data • Built with React & FastAPI
           </p>

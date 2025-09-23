@@ -314,22 +314,24 @@ const InputBox = ({ onSendMessage, disabled }) => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
-          className="absolute bottom-full left-0 right-0 mb-2 bg-gradient-to-br from-white/90 to-gray-100/90 dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-lg border border-gray-200/50 dark:border-gray-700/50 rounded-xl shadow-xl max-h-64 overflow-y-auto scrollbar-thin"
+          className="absolute bottom-full left-0 right-0 mb-3 bg-gradient-to-br from-white/95 to-cyan-50/95 dark:from-gray-800/95 dark:to-slate-800/95 backdrop-blur-2xl border border-cyan-200/50 dark:border-cyan-800/50 rounded-2xl shadow-2xl max-h-72 overflow-y-auto scrollbar-thin"
         >
-          <div className="p-3 border-b border-gray-200/50 dark:border-gray-700/50">
-            <div className="flex items-center space-x-2">
-              <Sparkles className="h-4 w-4 text-ocean-500" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div className="p-4 border-b border-cyan-200/30 dark:border-cyan-800/30">
+            <div className="flex items-center space-x-3">
+              <div className="bg-gradient-to-br from-cyan-500 to-blue-600 p-2 rounded-lg">
+                <Sparkles className="h-4 w-4 text-white" />
+              </div>
+              <span className="text-lg font-bold bg-gradient-to-r from-cyan-600 to-blue-700 bg-clip-text text-transparent">
                 Suggested Questions
               </span>
             </div>
           </div>
-          <div className="p-2">
+          <div className="p-3 space-y-2">
             {suggestions.map((suggestion, index) => (
               <button
                 key={index}
                 onClick={() => handleSuggestionClick(suggestion)}
-                className="w-full text-left p-2 rounded-lg hover:bg-gradient-to-r from-cyan-50/50 to-blue-50/50 dark:hover:from-gray-700/50 dark:hover:to-gray-800/50 text-sm text-gray-700 dark:text-gray-300 transition-all duration-150 text-over-background"
+                className="w-full text-left p-3 rounded-xl hover:bg-gradient-to-r from-cyan-50/70 to-blue-50/70 dark:hover:from-gray-700/70 dark:hover:to-slate-700/70 text-sm text-gray-700 dark:text-gray-300 transition-all duration-200 text-over-background border border-transparent hover:border-cyan-200/30 dark:hover:border-cyan-800/30"
               >
                 {suggestion}
               </button>
@@ -343,21 +345,21 @@ const InputBox = ({ onSendMessage, disabled }) => {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-2 p-3 bg-gradient-to-r from-red-100/90 to-red-200/90 dark:from-red-900/90 dark:to-red-800/90 backdrop-blur-sm text-red-700 dark:text-red-200 rounded-lg text-sm flex items-start space-x-2 border border-red-200/50 dark:border-red-800/50 shadow-md"
+          className="mb-3 p-4 bg-gradient-to-r from-red-100/95 to-red-200/95 dark:from-red-900/95 dark:to-red-800/95 backdrop-blur-lg text-red-700 dark:text-red-200 rounded-2xl text-sm flex items-start space-x-3 border border-red-300/50 dark:border-red-700/50 shadow-xl"
         >
           <div className="flex-shrink-0 mt-0.5">
             {recordingError.includes('network') || recordingError.includes('Network') ? 
-              <WifiOff className="h-4 w-4" /> : 
-              <MicOff className="h-4 w-4" />
+              <WifiOff className="h-5 w-5" /> : 
+              <MicOff className="h-5 w-5" />
             }
           </div>
           <div className="flex-1">
-            <span className="font-medium">Voice recording error:</span> {recordingError}
-            <div className="flex items-center space-x-2 mt-2">
+            <span className="font-bold">Voice recording error:</span> {recordingError}
+            <div className="flex items-center space-x-3 mt-3">
               {(recordingError.includes('permission') || recordingError.includes('Permission')) && (
                 <button 
                   onClick={requestMicrophonePermission}
-                  className="text-xs underline text-red-800 dark:text-red-300 hover:text-red-900 dark:hover:text-red-100"
+                  className="text-xs font-semibold underline text-red-800 dark:text-red-300 hover:text-red-900 dark:hover:text-red-100 px-2 py-1 rounded-lg bg-red-200/50 dark:bg-red-800/50"
                 >
                   Request permission
                 </button>
@@ -365,7 +367,7 @@ const InputBox = ({ onSendMessage, disabled }) => {
               {(recordingError.includes('network') || recordingError.includes('Network')) && (
                 <button 
                   onClick={retrySpeechRecognition}
-                  className="flex items-center text-xs underline text-red-800 dark:text-red-300 hover:text-red-900 dark:hover:text-red-100"
+                  className="flex items-center text-xs font-semibold underline text-red-800 dark:text-red-300 hover:text-red-900 dark:hover:text-red-100 px-2 py-1 rounded-lg bg-red-200/50 dark:bg-red-800/50"
                 >
                   <RefreshCw className="h-3 w-3 mr-1" />
                   Retry
@@ -381,24 +383,24 @@ const InputBox = ({ onSendMessage, disabled }) => {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-2 p-2 bg-gradient-to-r from-yellow-100/90 to-yellow-200/90 dark:from-yellow-900/90 dark:to-yellow-800/90 backdrop-blur-sm text-yellow-700 dark:text-yellow-200 rounded-lg text-sm flex items-center space-x-2 border border-yellow-200/50 dark:border-yellow-800/50 shadow-md"
+          className="mb-3 p-3 bg-gradient-to-r from-yellow-100/95 to-yellow-200/95 dark:from-yellow-900/95 dark:to-yellow-800/95 backdrop-blur-lg text-yellow-700 dark:text-yellow-200 rounded-2xl text-sm flex items-center space-x-3 border border-yellow-300/50 dark:border-yellow-700/50 shadow-xl"
         >
-          <WifiOff className="h-4 w-4" />
+          <WifiOff className="h-5 w-5" />
           <span>Network offline. Voice recording requires an internet connection.</span>
         </motion.div>
       )}
 
       {/* Main input container */}
-      <div className="bg-gradient-to-br from-white/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-900/80 backdrop-blur-lg rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-xl shadow-ocean-500/10 dark:shadow-ocean-900/20 overflow-hidden">
-        <form onSubmit={handleSubmit} className="flex items-end space-x-2 p-4">
+      <div className="bg-gradient-to-br from-white/80 to-cyan-50/80 dark:from-gray-800/80 dark:to-slate-800/80 backdrop-blur-2xl rounded-3xl border border-cyan-200/40 dark:border-cyan-800/40 shadow-2xl shadow-cyan-500/20 dark:shadow-cyan-900/30 overflow-hidden">
+        <form onSubmit={handleSubmit} className="flex items-end space-x-3 p-5">
           {/* Suggestion button */}
           <button
             type="button"
             onClick={() => setShowSuggestions(!showSuggestions)}
-            className={`flex-shrink-0 p-2 rounded-lg transition-all duration-200 shadow-md ${
+            className={`flex-shrink-0 p-3 rounded-xl transition-all duration-300 shadow-lg transform hover:scale-105 ${
               showSuggestions
-                ? 'bg-gradient-to-br from-ocean-500 to-blue-600 text-white'
-                : 'bg-gradient-to-br from-gray-100/80 to-gray-200/80 hover:from-gray-200/80 hover:to-gray-300/80 dark:from-gray-700/80 dark:to-gray-800/80 dark:hover:from-gray-600/80 dark:hover:to-gray-700/80 text-gray-600 dark:text-gray-300'
+                ? 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-cyan-500/30'
+                : 'bg-gradient-to-br from-white/80 to-gray-100/80 hover:from-cyan-50/80 hover:to-blue-50/80 dark:from-gray-700/80 dark:to-gray-800/80 dark:hover:from-gray-600/80 dark:hover:to-gray-700/80 text-gray-700 dark:text-gray-300 shadow-gray-300/20 dark:shadow-gray-900/20'
             }`}
             title="Show suggestions"
           >
@@ -418,10 +420,10 @@ const InputBox = ({ onSendMessage, disabled }) => {
               className={`
                 w-full resize-none border-0 bg-transparent text-gray-900 dark:text-gray-100 
                 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-0
-                max-h-32 scrollbar-thin text-over-background
+                max-h-36 scrollbar-thin text-over-background text-lg
                 ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
               `}
-              style={{ minHeight: '24px', maxHeight: '128px' }}
+              style={{ minHeight: '28px', maxHeight: '144px' }}
             />
             
             {/* Clear button */}
@@ -429,7 +431,7 @@ const InputBox = ({ onSendMessage, disabled }) => {
               <button
                 type="button"
                 onClick={clearMessage}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors shadow-sm"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1.5 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors rounded-lg bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm shadow-sm"
                 title="Clear message"
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -445,10 +447,10 @@ const InputBox = ({ onSendMessage, disabled }) => {
             onClick={toggleRecording}
             disabled={disabled || !isOnline}
             className={`
-              flex-shrink-0 p-2 rounded-lg transition-all duration-200 shadow-md
+              flex-shrink-0 p-3 rounded-xl transition-all duration-300 shadow-lg transform hover:scale-105
               ${isRecording 
-                ? 'bg-gradient-to-br from-red-500 to-red-600 text-white animate-pulse' 
-                : 'bg-gradient-to-br from-gray-100/80 to-gray-200/80 hover:from-gray-200/80 hover:to-gray-300/80 dark:from-gray-700/80 dark:to-gray-800/80 dark:hover:from-gray-600/80 dark:hover:to-gray-700/80 text-gray-600 dark:text-gray-300'
+                ? 'bg-gradient-to-br from-red-500 to-red-600 text-white animate-pulse shadow-red-500/30' 
+                : 'bg-gradient-to-br from-white/80 to-gray-100/80 hover:from-cyan-50/80 hover:to-blue-50/80 dark:from-gray-700/80 dark:to-gray-800/80 dark:hover:from-gray-600/80 dark:hover:to-gray-700/80 text-gray-700 dark:text-gray-300 shadow-gray-300/20 dark:shadow-gray-900/20'
               }
               ${(disabled || !isOnline) ? 'opacity-50 cursor-not-allowed' : ''}
             `}
@@ -464,10 +466,10 @@ const InputBox = ({ onSendMessage, disabled }) => {
             whileHover={!disabled && message.trim() ? { scale: 1.05 } : {}}
             whileTap={!disabled && message.trim() ? { scale: 0.95 } : {}}
             className={`
-              flex-shrink-0 p-2 rounded-lg transition-all duration-200 shadow-md
+              flex-shrink-0 p-3 rounded-xl transition-all duration-300 shadow-lg
               ${!disabled && message.trim()
-                ? 'bg-gradient-to-br from-ocean-500 to-blue-600 hover:from-ocean-600 hover:to-blue-700 text-white'
-                : 'bg-gradient-to-br from-gray-300/80 to-gray-400/80 dark:from-gray-600/80 dark:to-gray-700/80 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+                ? 'bg-gradient-to-br from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-cyan-500/30'
+                : 'bg-gradient-to-br from-gray-300/80 to-gray-400/80 dark:from-gray-600/80 dark:to-gray-700/80 text-gray-500 dark:text-gray-400 cursor-not-allowed shadow-gray-300/20 dark:shadow-gray-900/20'
               }
             `}
             title="Send message"
@@ -477,15 +479,15 @@ const InputBox = ({ onSendMessage, disabled }) => {
         </form>
 
         {/* Input hints */}
-        <div className="px-4 pb-3">
-          <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+        <div className="px-5 pb-4">
+          <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
             <span>
               Press Enter to send, Shift+Enter for new line
             </span>
-            <span className={`transition-colors flex items-center space-x-1 ${
+            <span className={`transition-colors flex items-center space-x-1 font-medium ${
               disabled ? 'text-red-500' : 'text-green-500'
             }`}>
-              {isOnline ? <Wifi className="h-3 w-3" /> : <WifiOff className="h-3 w-3" />}
+              {isOnline ? <Wifi className="h-3.5 w-3.5" /> : <WifiOff className="h-3.5 w-3.5" />}
               <span>{isOnline ? '● Online' : '● Offline'}</span>
             </span>
           </div>
@@ -494,8 +496,8 @@ const InputBox = ({ onSendMessage, disabled }) => {
 
       {/* Character count */}
       {message.length > 500 && (
-        <div className="mt-1 text-right">
-          <span className={`text-xs ${
+        <div className="mt-2 text-right">
+          <span className={`text-xs font-semibold ${
             message.length > 1000 ? 'text-red-500' : 'text-yellow-500'
           }`}>
             {message.length}/1000 characters
