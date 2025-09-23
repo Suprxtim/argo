@@ -6,7 +6,7 @@ services:
       cd frontend
       npm install
       npx react-scripts build
-    startCommand: npx serve -s build
+    startCommand: cd frontend && npm run serve
     envVars:
       - key: REACT_APP_API_URL
         value: https://argo-backend-dbvb.onrender.com
