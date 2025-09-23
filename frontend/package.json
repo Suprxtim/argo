@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "FloatChat - AI-powered chat interface for Argo oceanographic data (Vercel deployment ready)",
   "engines": {
-    "node": "18.x"
-  },
-  "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "dependencies": {
     "react": "^18.2.0",
