@@ -93,12 +93,12 @@ const PlotDisplay = ({ plotUrl }) => {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden"
+        className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200/50 dark:border-gray-700/50 shadow-lg shadow-ocean-500/10 dark:shadow-ocean-900/20 overflow-hidden"
       >
         {/* Plot header */}
-        <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+        <div className="flex items-center justify-between p-3 bg-gray-50/80 dark:bg-gray-700/80 backdrop-blur-sm border-b border-gray-200/50 dark:border-gray-600/50">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Interactive Visualization
             </span>
@@ -132,9 +132,9 @@ const PlotDisplay = ({ plotUrl }) => {
         </div>
 
         {/* Plot content */}
-        <div className="relative h-96 bg-white dark:bg-gray-900">
+        <div className="relative h-96 bg-white dark:bg-gray-900/80">
           {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-800">
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-50/80 dark:bg-gray-800/80 backdrop-blur-sm">
               <div className="flex flex-col items-center space-y-3">
                 <div className="spinner"></div>
                 <span className="text-sm text-gray-600 dark:text-gray-400">
@@ -145,7 +145,7 @@ const PlotDisplay = ({ plotUrl }) => {
           )}
 
           {hasError ? (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-800">
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-50/80 dark:bg-gray-800/80 backdrop-blur-sm">
               <div className="flex flex-col items-center space-y-3 text-center">
                 <AlertCircle className="h-8 w-8 text-red-500" />
                 <div>
@@ -194,18 +194,18 @@ const PlotDisplay = ({ plotUrl }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black bg-opacity-75 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={closeFullscreen}
         >
           <motion.div
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.9 }}
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full h-full max-w-7xl max-h-full overflow-hidden"
+            className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg rounded-lg shadow-2xl w-full h-full max-w-7xl max-h-full overflow-hidden border border-gray-200/50 dark:border-gray-700/50"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Fullscreen header */}
-            <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+            <div className="flex items-center justify-between p-4 bg-gray-50/80 dark:bg-gray-700/80 backdrop-blur-sm border-b border-gray-200/50 dark:border-gray-600/50">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Visualization - Fullscreen
               </h3>

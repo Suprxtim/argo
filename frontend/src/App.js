@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Moon, Sun, Waves } from 'lucide-react';
 import ChatBox from './components/ChatBox';
 import InputBox from './components/InputBox';
+import AnimatedBackground from './components/AnimatedBackground';
 import axios from 'axios';
 
 // Use environment variable for API base URL, fallback to relative paths for development
@@ -134,84 +135,95 @@ What would you like to explore about ocean data?`,
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ocean-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
-      {/* Header */}
-      <header className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <motion.div 
-            className="flex items-center space-x-3"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="bg-ocean-500 p-2 rounded-xl">
-              <Waves className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                FloatChat
-              </h1>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                Ocean Data AI Assistant
-              </p>
-            </div>
-          </motion.div>
-
-          <div className="flex items-center space-x-4">
-            {/* API Status */}
-            <div className="flex items-center space-x-2">
-              <div className={`w-2 h-2 rounded-full ${
-                apiStatus === 'healthy' ? 'bg-green-400' : 
-                apiStatus === 'degraded' ? 'bg-yellow-400' : 'bg-red-400'
-              }`} />
-              <span className="text-sm text-gray-600 dark:text-gray-300">
-                {apiStatus === 'healthy' ? 'Online' : 
-                 apiStatus === 'degraded' ? 'Limited' : 'Offline'}
-              </span>
-            </div>
-
-            {/* Clear Chat Button */}
-            <button
-              onClick={clearChat}
-              className="px-3 py-1 text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors duration-200"
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Animated Background */}
+      <AnimatedBackground />
+      
+      {/* Content Container */}
+      <div className="relative z-10 min-h-screen bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm">
+        {/* Decorative elements */}
+        <div className="absolute top-4 left-4 w-3 h-3 rounded-full bg-cyan-400/40 animate-ping"></div>
+        <div className="absolute top-8 right-8 w-2 h-2 rounded-full bg-blue-400/40 animate-ping delay-1000"></div>
+        <div className="absolute bottom-8 left-8 w-2 h-2 rounded-full bg-teal-400/40 animate-ping delay-2000"></div>
+        
+        {/* Header */}
+        <header className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-700/50 sticky top-0 z-50 shadow-sm">
+          <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <motion.div 
+              className="flex items-center space-x-3"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              Clear Chat
-            </button>
+              <div className="bg-gradient-to-br from-cyan-500 to-blue-600 p-2 rounded-xl shadow-lg">
+                <Waves className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900 dark:text-white text-over-background">
+                  FloatChat
+                </h1>
+                <p className="text-sm text-gray-600 dark:text-gray-300 text-over-background">
+                  Ocean Data AI Assistant
+                </p>
+              </div>
+            </motion.div>
 
-            {/* Dark Mode Toggle */}
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition-colors duration-200"
-              aria-label="Toggle dark mode"
-            >
-              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </button>
+            <div className="flex items-center space-x-4">
+              {/* API Status */}
+              <div className="flex items-center space-x-2">
+                <div className={`w-2 h-2 rounded-full ${
+                  apiStatus === 'healthy' ? 'bg-green-400 animate-pulse' : 
+                  apiStatus === 'degraded' ? 'bg-yellow-400' : 'bg-red-400'
+                }`} />
+                <span className="text-sm text-gray-600 dark:text-gray-300 text-over-background">
+                  {apiStatus === 'healthy' ? 'Online' : 
+                   apiStatus === 'degraded' ? 'Limited' : 'Offline'}
+                </span>
+              </div>
+
+              {/* Clear Chat Button */}
+              <button
+                onClick={clearChat}
+                className="px-3 py-1 text-sm bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+              >
+                Clear Chat
+              </button>
+
+              {/* Dark Mode Toggle */}
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition-colors duration-200 shadow-md"
+                aria-label="Toggle dark mode"
+              >
+                {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 py-6 h-[calc(100vh-80px)] flex flex-col">
-        {/* Chat Area */}
-        <div className="flex-1 flex flex-col space-y-4 overflow-hidden">
-          <ChatBox 
-            messages={messages} 
-            isLoading={isLoading}
-          />
-          
-          <InputBox 
-            onSendMessage={sendMessage}
-            disabled={isLoading || apiStatus === 'unavailable'}
-          />
-        </div>
-      </main>
+        {/* Main Content */}
+        <main className="max-w-6xl mx-auto px-4 py-6 h-[calc(100vh-80px)] flex flex-col">
+          {/* Chat Area */}
+          <div className="flex-1 flex flex-col space-y-4 overflow-hidden">
+            <ChatBox 
+              messages={messages} 
+              isLoading={isLoading}
+            />
+            
+            <InputBox 
+              onSendMessage={sendMessage}
+              disabled={isLoading || apiStatus === 'unavailable'}
+            />
+          </div>
+        </main>
 
-      {/* Footer */}
-      <footer className="text-center py-4 text-sm text-gray-500 dark:text-gray-400">
-        <p>
-          Powered by Argo oceanographic data • Built with React & FastAPI
-        </p>
-      </footer>
+        {/* Footer */}
+        <footer className="text-center py-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200/30 dark:border-gray-700/30">
+          <p className="text-over-background">
+            Powered by Argo oceanographic data • Built with React & FastAPI
+          </p>
+        </footer>
+      </div>
     </div>
   );
 };

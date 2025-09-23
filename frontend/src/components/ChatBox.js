@@ -11,7 +11,7 @@ const ChatBox = ({ messages, isLoading }) => {
   }, [messages, isLoading]);
 
   return (
-    <div className="flex-1 overflow-hidden bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg">
+    <div className="flex-1 overflow-hidden bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-xl shadow-ocean-500/10 dark:shadow-ocean-900/20">
       <div className="h-full overflow-y-auto scrollbar-thin p-6 space-y-4">
         <AnimatePresence>
           {messages.map((message, index) => (
@@ -25,6 +25,7 @@ const ChatBox = ({ messages, isLoading }) => {
                 delay: index * 0.1,
                 ease: "easeOut"
               }}
+              className="relative"
             >
               <Message message={message} />
             </motion.div>
@@ -39,14 +40,14 @@ const ChatBox = ({ messages, isLoading }) => {
             className="flex justify-start"
           >
             <div className="max-w-xs lg:max-w-md">
-              <div className="bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-bl-sm px-4 py-3">
+              <div className="bg-gradient-to-r from-gray-100/80 to-gray-200/80 dark:from-gray-700/80 dark:to-gray-800/80 backdrop-blur-sm rounded-2xl rounded-bl-sm px-4 py-3 border border-gray-200/30 dark:border-gray-600/30 shadow-md">
                 <div className="flex items-center space-x-2">
                   <div className="flex space-x-1">
-                    <div className="typing-indicator"></div>
-                    <div className="typing-indicator"></div>
-                    <div className="typing-indicator"></div>
+                    <div className="typing-indicator bg-cyan-500"></div>
+                    <div className="typing-indicator bg-cyan-500"></div>
+                    <div className="typing-indicator bg-cyan-500"></div>
                   </div>
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                  <span className="text-sm text-gray-600 dark:text-gray-300 text-over-background">
                     FloatChat is thinking...
                   </span>
                 </div>
@@ -62,7 +63,7 @@ const ChatBox = ({ messages, isLoading }) => {
             animate={{ opacity: 1 }}
             className="flex flex-col items-center justify-center h-full text-center space-y-4"
           >
-            <div className="bg-ocean-100 dark:bg-ocean-900 p-6 rounded-full">
+            <div className="bg-gradient-to-br from-ocean-100/80 to-cyan-100/80 dark:from-ocean-900/50 dark:to-cyan-900/50 backdrop-blur-sm p-6 rounded-full border border-ocean-200/50 dark:border-ocean-700/50 shadow-lg">
               <svg 
                 className="w-12 h-12 text-ocean-500" 
                 fill="none" 
@@ -78,10 +79,10 @@ const ChatBox = ({ messages, isLoading }) => {
               </svg>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 text-over-background">
                 Welcome to FloatChat!
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 max-w-md">
+              <p className="text-gray-600 dark:text-gray-300 max-w-md text-over-background">
                 Start a conversation about oceanographic data. Ask me about temperature patterns, 
                 salinity measurements, or request visualizations of ocean data.
               </p>

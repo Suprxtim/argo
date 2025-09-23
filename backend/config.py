@@ -8,7 +8,7 @@ load_dotenv()
 class Config:
     # API Configuration
     DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
-    DEEPSEEK_API_URL = os.getenv("DEEPSEEK_API_URL", "https://openrouter.ai/api/v1/chat/completions")
+    DEEPSEEK_API_URL = os.getenv("DEEPSEEK_API_URL", "https://api.deepseek.com/v1/chat/completions")
     
     # Server Configuration
     HOST = os.getenv("HOST", "localhost")

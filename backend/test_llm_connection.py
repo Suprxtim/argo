@@ -8,13 +8,13 @@ import os
 # Add the backend directory to the Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from llm_utils import DeepSeekLLM
+from llm_utils import OpenRouterLLM
 
 async def test_connection():
     print("Testing LLM connection...")
     
     # Initialize the LLM
-    llm = DeepSeekLLM()
+    llm = OpenRouterLLM()
     
     # Check if API key is configured
     if not llm.api_key:

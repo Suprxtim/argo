@@ -23,7 +23,7 @@ async def test_api_key():
     
     print(f"✅ API key loaded: {llm.api_key[:10]}...{llm.api_key[-5:]}")
     print(f"✅ API URL: {llm.api_url}")
-    print(f"✅ Model: deepseek/deepseek-r1:free")
+    print(f"✅ Model: x-ai/grok-4-fast:free")
     
     # Test a simple API call
     try:

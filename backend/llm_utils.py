@@ -46,7 +46,7 @@ class OpenRouterLLM:
             
             # Prepare the API request with optimized parameters for OpenRouter
             request_data = {
-                "model": "deepseek/deepseek-r1:free",  # Updated to use DeepSeek R1 model
+                "model": "x-ai/grok-4-fast:free",  # Updated to use Grok 4 model
                 "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_message}
