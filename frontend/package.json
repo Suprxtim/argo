@@ -26,10 +26,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "vercel-build": "node build.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "chmod +x node_modules/.bin/react-scripts || true"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
